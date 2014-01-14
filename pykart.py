@@ -61,6 +61,7 @@ def selectTrack():
         return selectedtrack
 
 def addTrack():
+    '''This function adds a track to the database using the addTrack function from pykartdb '''
     os.system("clear")
     print("------------------")
     print("   Add new track")
