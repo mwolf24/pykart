@@ -45,7 +45,8 @@ def trackMenu():
 
 def selectTrack():
     """This function gets a list of all tracks, displays them on the screen and ask user 
-    to select a track. It convert the user input to an integer and then returns the trackname. Lists start at 0 so the user input is distracted by 1  """
+    to select a track. It convert the user input to an integer and then returns the trackname. Lists start at 0 so the user input is distracted by 1
+    TODO: correct track numbering in the tracklist  """
     loop = 1
     while loop == 1:
         os.system("clear")
