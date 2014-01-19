@@ -45,21 +45,22 @@ def trackMenu():
 
 def selectTrack():
     """This function gets a list of all tracks, displays them on the screen and ask user 
-    to select a track. It convert the user input to an integer and then returns the trackname. Lists start at 0 so the user input is distracted by 1
-    TODO: correct track numbering in the tracklist  """
+    to select a track. It convert the user input to an integer and then returns the trackname. Lists start at 0 so the user input is distracted by 1"""
     loop = 1
     while loop == 1:
         os.system("clear")
         print("------------------")
         print("  Select a Track")
         print("------------------")
-        tracklist = kart.listAllTracks()
-        for i in tracklist:
-            print(i[0], " ", i[1])
+        trackList = kart.listAllTracks()
+        y = 1
+        for i in trackList:
+            print(y, " ", i[1])
+            y += 1
         choice = input("\nPlease your a track: ")
         track = int(choice)
-        selectedtrack = tracklist[track -1][1] 
-        return selectedtrack
+        selectedTrack = trackList[track -1][1] 
+        return selectedTrack
 
 def addTrack():
     '''This function adds a track to the database using the addTrack function from pykartdb '''
