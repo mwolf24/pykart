@@ -1,0 +1,11 @@
+
+
+select 
+laps.lap_id, 
+laps.laptime,
+heats.heat_pos,
+tracks.name
+from laps
+inner join heats on laps.heat_id = heats.heat_id 
+inner join tracks on tracks.track_id = heats.track_id
+where tracks.track_id=4;
