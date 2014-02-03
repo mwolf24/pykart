@@ -1,0 +1,16 @@
+insert into laps select '51' as lap_id, '5' as heat_id, '41.426' as laptime
+union select '52', '5', '39.494'
+union select '53', '5', '41.415'
+union select '54', '5', '39.431'
+union select '55', '5', '39.711'
+union select '56', '5', '38.981'
+union select '57', '5', '39.376'
+union select '58', '5', '39.363'
+union select '59', '5', '39.571'
+union select '60', '5', '39.692'
+union select '61', '5', '40.007'
+union select '62', '5', '39.034'
+union select '63', '5', '38.571'
+union select '64', '5', '39.139'
+union select '65', '5', '38.889';
+
