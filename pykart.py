@@ -24,7 +24,7 @@ def mainMenu():
     print("(1) Track Menu")
     print("(2) Heat Menu")
     print("(3) Lap Menu")
-    print("(4) Exit")
+    print("(5) Exit")
     print("\n")
     return input("Enter option: ")
 

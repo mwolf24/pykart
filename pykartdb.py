@@ -54,22 +54,54 @@ def getTrackCity(trackName):
     trackCity = trackDetails[0][3]
     return trackCity
     
-def totalLaps(trackName):
+def totalLaps(trackID):
     # get total number of laps from active track
-    # First get the current track_id
-    trackID = getTrackID(trackName)
-    
+    cur.execute('''SELECT 
+    COUNT(laps.laptime)
+    FROM laps
+    INNER JOIN heats ON laps.heat_id = heats.heat_id 
+    INNER JOIN tracks ON tracks.track_id = heats.track_id
+    WHERE tracks.track_id = "{0}"; '''.format(trackID))
+    totalLaps = cur.fetchone()
+    return totalLaps    
 
-
-    # now query the tables for all the laps at the active track 
-    
-    
-def fastestLap(trackName):
+def getAlllaps(trackID):
+    # Get all driven laps from a track
+    cur.execute('''SELECT
+    laps.laptime
+    FROM laps
+    INNER JOIN heats ON laps.heat_id = heats.heat_id 
+    INNER JOIN tracks ON tracks.track_id = heats.track_id
+    WHERE tracks.track_id = "{0}"; '''.format(trackID))
+    allLaps = cur.fetchall()
+    return allLaps
+   
+def fastestLap(trackID):
     # get fastest lap from active track
-    cur.execute(''' SELECT ''')
-def totalTrackTime(trackName):
+    cur.execute('''SELECT
+    MIN(laps.laptime)
+    FROM laps
+    INNER JOIN heats ON laps.heat_id = heats.heat_id
+    INNER JOIN tracks ON tracks.track_id = heats.track_id
+    WHERE tracks.track_id = "{0}"; '''.format(trackID))
+    fastest = cur.fetchone()
+    return fastest
+
+def totalTrackTime(trackID):
     # Get total time spent on active track
-    cur.execute(''' SELECT ''')
+    # the query gives total time in seconds
+    # first convert the query output to a float in times
+    # then calculate to minutes in timem
+    cur.execute(''' SELECT
+    SUM(laps.laptime)
+    FROM laps
+    INNER JOIN heats ON laps.heat_id = heats.heat_id
+    INNER JOIN tracks ON tracks.track_id = heats.track_id
+    WHERE tracks.track_id = "{0}"; '''.format(trackID))
+    seconds = cur.fetchone()
+    minutes = float(seconds[0]) / 60
+    return minutes
+
 def totalTrackKM(trackName):
     # Get total km or m total driver on track
     cur.execute(''' SELECT ''')
@@ -81,4 +113,4 @@ def closeDB():
 
 
 connectDB()
-listAllTracks()
+
