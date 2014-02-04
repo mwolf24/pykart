@@ -1,0 +1,25 @@
+CREATE TABLE tracks (
+'track_id' INTEGER PRIMARY KEY NOT NULL,
+'name' TEXT NOT NULL,
+'length' REAL DEFAULT '0.00',
+'city' TEXT
+);
+
+CREATE TABLE heats (
+'heat_id' INTEGER PRIMARY KEY NOT NULL,
+'track_id' INTEGER UNSIGNED NOT NULL,
+'heat_pos' INTEGER UNSIGNED NOT NULL,
+'day_pos' INTEGER UNSIGNED NOT NULL,
+'type' TEXT NOT NULL DEFAULT 'training',
+'average' REAL,
+'date' TEXT,
+'comment' TEXT,
+FOREIGN KEY ('track_id') REFERENCES tracks ('track_id')
+);
+
+CREATE TABLE laps (
+'lap_id' INTEGER PRIMARY KEY NOT NULL,
+'heat_id' INTEGER UNSIGNED NOT NULL,
+'laptime' REAL UNSIGNED NOT NULL,
+FOREIGN KEY ('heat_id') REFERENCES heats ('heat_id')
+);
