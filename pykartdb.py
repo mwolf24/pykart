@@ -40,16 +40,16 @@ def getTrackName(trackName):
     trackName = trackDetails[0][1]
     return trackName
 
-def getTrackLength(trackName):
+def getTrackLength(trackID):
     # get the length of the current track
-    cur.execute('''SELECT length FROM tracks WHERE name = "{0}";'''.format(trackName))
+    cur.execute('''SELECT length FROM tracks WHERE track_id = "{0}";'''.format(trackID))
     trackDetails = cur.fetchone()
     trackLength = float(trackDetails[0])
     return trackLength
 
-def getTrackCity(trackName):
+def getTrackCity(trackID):
     # get the city of the current track
-    cur.execute('''SELECT city FROM tracks WHERE name = "{0}";'''.format(trackName))
+    cur.execute('''SELECT city FROM tracks WHERE track_id = "{0}";'''.format(trackID))
     trackDetails = cur.fetchone()
     trackCity = str(trackDetails[0])
     return trackCity
@@ -62,7 +62,8 @@ def totalLaps(trackID):
     INNER JOIN heats ON laps.heat_id = heats.heat_id 
     INNER JOIN tracks ON tracks.track_id = heats.track_id
     WHERE tracks.track_id = "{0}"; '''.format(trackID))
-    totalLaps = cur.fetchone()
+    laps = cur.fetchone()
+    totalLaps = int(laps[0])
     return totalLaps    
 
 def getAlllaps(trackID):
@@ -103,16 +104,14 @@ def totalTrackTime(trackID):
     return minutes
 
 def totalTrackKM(trackID):
-    # Get total km or m total driver on track
+    # Get total km driver on a track
     # First get total number of laps on current active track and make it an int
-    tmp_total = totalLaps(trackID)
-    total = int(tmp_total[0])
-    # New get the tracklength and make it a float
-    tmp_length = getTrackLength(trackID)
-    length = float(tmp_length[0])
-    
+    laps = totalLaps(trackID)
+    # Now get the tracklength and make it a float
+    length = getTrackLength(trackID)    
     # Now calculate the total km on the track
-
+    km = laps * length / 1000
+    return km
 
 # close the db connection
 def closeDB():
