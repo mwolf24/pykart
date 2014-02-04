@@ -112,5 +112,3 @@ def closeDB():
       con.close()
 
 
-connectDB()
-
