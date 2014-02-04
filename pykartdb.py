@@ -27,31 +27,31 @@ def addTrack(trackName, trackLength, trackCity):
     con.commit()
 
 def getTrackID(trackName):
-    # get the active tracks id number
-    cur.execute('''SELECT * from tracks where name = "{0}";'''.format(trackName))
+    # get the active track id number
+    cur.execute('''SELECT track_id FROM tracks WHERE name = "{0}";'''.format(trackName))
     trackDetails = cur.fetchone()
-    trackID = trackDetails[0][0]
+    trackID = str(trackDetails[0])
     return trackID       
 
 def getTrackName(trackName):
-    # get the name of the active track
-    cur.execute('''SELECT * from tracks where name = "{0}";'''.format(trackName))
+    # ??? Not needed ???
+    cur.execute('''SELECT * FROM tracks WHERE name = "{0}";'''.format(trackName))
     trackDetails = cur.fetchone()
     trackName = trackDetails[0][1]
     return trackName
 
 def getTrackLength(trackName):
     # get the length of the current track
-    cur.execute('''SELECT * from tracks where name = "{0}";'''.format(trackName))
+    cur.execute('''SELECT length FROM tracks WHERE name = "{0}";'''.format(trackName))
     trackDetails = cur.fetchone()
-    trackLength = trackDetails[0][2]
+    trackLength = float(trackDetails[0])
     return trackLength
 
 def getTrackCity(trackName):
     # get the city of the current track
-    cur.execute('''SELECT * from tracks where name = "{0}";'''.format(trackName))
+    cur.execute('''SELECT city FROM tracks WHERE name = "{0}";'''.format(trackName))
     trackDetails = cur.fetchone()
-    trackCity = trackDetails[0][3]
+    trackCity = str(trackDetails[0])
     return trackCity
     
 def totalLaps(trackID):
@@ -102,9 +102,17 @@ def totalTrackTime(trackID):
     minutes = float(seconds[0]) / 60
     return minutes
 
-def totalTrackKM(trackName):
+def totalTrackKM(trackID):
     # Get total km or m total driver on track
-    cur.execute(''' SELECT ''')
+    # First get total number of laps on current active track and make it an int
+    tmp_total = totalLaps(trackID)
+    total = int(tmp_total[0])
+    # New get the tracklength and make it a float
+    tmp_length = getTrackLength(trackID)
+    length = float(tmp_length[0])
+    
+    # Now calculate the total km on the track
+
 
 # close the db connection
 def closeDB():
