@@ -14,7 +14,7 @@ def connectDB():
     cur = con.cursor()
 
     # Enable foreign key support
-    cur.execute("PRAGMA foreign_keys = ON")
+    cur.execute('''PRAGMA foreign_keys = ON''')
 
 
 def listAllTracks():
