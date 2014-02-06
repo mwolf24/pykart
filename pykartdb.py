@@ -16,7 +16,6 @@ def connectDB():
     # Enable foreign key support
     cur.execute('''PRAGMA foreign_keys = ON''')
 
-
 def listAllTracks():
     cur.execute('''SELECT * FROM tracks;''')
     tracklist = cur.fetchall()
@@ -33,11 +32,11 @@ def getTrackID(trackName):
     trackID = str(trackDetails[0])
     return trackID       
 
-def getTrackName(trackName):
+def getTrackName(trackID):
     # ??? Not needed ???
-    cur.execute('''SELECT * FROM tracks WHERE name = "{0}";'''.format(trackName))
+    cur.execute('''SELECT name FROM tracks WHERE track_id = "{0}";'''.format(trackID))
     trackDetails = cur.fetchone()
-    trackName = trackDetails[0][1]
+    trackName = str(trackDetails[0])
     return trackName
 
 def getTrackLength(trackID):
@@ -66,7 +65,7 @@ def totalLaps(trackID):
     totalLaps = int(laps[0])
     return totalLaps    
 
-def getAlllaps(trackID):
+def allLaps(trackID):
     # Get all driven laps from a track
     cur.execute('''SELECT
     laps.laptime
@@ -85,7 +84,8 @@ def fastestLap(trackID):
     INNER JOIN heats ON laps.heat_id = heats.heat_id
     INNER JOIN tracks ON tracks.track_id = heats.track_id
     WHERE tracks.track_id = "{0}"; '''.format(trackID))
-    fastest = cur.fetchone()
+    lap = cur.fetchone()
+    fastest = float(lap[0])
     return fastest
 
 def totalTrackTime(trackID):
@@ -117,5 +117,3 @@ def totalTrackKM(trackID):
 def closeDB():
   if con:
       con.close()
-
-

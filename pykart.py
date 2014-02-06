@@ -57,10 +57,44 @@ def selectTrack():
         for i in trackList:
             print(y, " ", i[1])
             y += 1
-        choice = input("\nPlease your a track: ")
+        choice = input("\nPlease choose a track: ")
         track = int(choice)
         selectedTrack = trackList[track -1][1] 
         return selectedTrack
+
+def showTrackDetails(trackID):
+    # Show track details
+    trackName = kart.getTrackName(trackID)
+    trackLength = kart.getTrackLength(trackID)
+    trackCity = kart.getTrackCity(trackID)
+    totalLaps = kart.totalLaps(trackID)
+    fastestLap = kart.fastestLap(trackID)
+    trackTime = kart.totalTrackTime(trackID)
+    trackKM = kart.totalTrackKM(trackID)
+    os.system('clear')
+    loop = 1
+    while loop == 1:
+        print("-------------")
+        print("Track details")
+        print("-------------")
+        print("\n")
+        print("Track configuration:")
+        print("\n")
+        print("Name: ", trackName)
+        print("Length: ", trackLength)
+        print("City: ", trackCity)
+        print("Total numbers of laps: ", totalLaps)
+        print("Fastest lap: ", fastestLap)
+        print("Total track time in minutes: ", trackTime)
+        print("Total kilometer driven: ", trackKM)
+        print("\n")
+        choise = input("Press q to quit: ")
+        if choise == "q" or choise == "Q":
+            loop = 0
+        else:
+            os.system("clear")
+            loop = 1
+    trackMenu()
 
 def addTrack():
     '''This function adds a track to the database using the addTrack function from pykartdb '''
@@ -74,12 +108,6 @@ def addTrack():
     kart.addTrack(trackName, trackLength, trackCity)
     print("Track added: ", trackName, " ", trackLength, " ", trackCity)
     os.system("sleep 2")
-
-def heatMenu():
-    print()
-
-def lapMenu():
-    print()
 
 
 
@@ -97,13 +125,15 @@ while loop == 1:
             option = trackMenu()
             if option == '1':
                 # Choose a track
-                activeTrack = selectTrack()
-                print("Selected track: " + activeTrack)
+                trackName = selectTrack()
+                trackID = kart.getTrackID(trackName)
+                print("Selected track: " + trackName)
+                print("Current trackID: " + trackID)
                 os.system("sleep 2")
                 trackMenu()
             if option == '2':
-                # Show track details
-                print(option)
+                showTrackDetails(trackID)
+                #os.system('sleep 10')
             if option =='3':
                 # Add track menu
                 addTrack()
