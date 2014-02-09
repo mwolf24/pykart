@@ -4,7 +4,7 @@
 # Created on 21/12/13 by Michel Wolf
 # version 0.1 
 
-import pykartdb as kart, os, sys
+import pykartdb as kart, os, sys, time
 
 os.system('clear')
 
@@ -16,7 +16,7 @@ print("\n")
 # Functions
 
 def mainMenu():
-    #os.system("clear")
+    os.system("clear")
     print("------------------")
     print("    Main Menu")
     print("------------------")
@@ -88,13 +88,42 @@ def showTrackDetails(trackID):
         print("Total track time in minutes: ", trackTime)
         print("Total kilometer driven: ", trackKM)
         print("\n")
-        choise = input("Press q to quit: ")
-        if choise == "q" or choise == "Q":
+        print("\nPress q to quit")
+        choice = input("Press l to see all the tracks laps: ")
+        
+        if choice == "q" or choice == "Q":
             loop = 0
+        elif choice == "l" or choice == "L":
+            showAllLaps(trackID)
         else:
             os.system("clear")
             loop = 1
     trackMenu()
+
+def showAllLaps(trackID):
+    os.system("clear")
+    trackName = kart.getTrackName(trackID)
+    allLaps = kart.allLaps(trackID)
+    loop = 1
+    while loop == 1:
+        print("------------------------------------------------")
+        print("Showing all laps for track:", trackName)
+        print("------------------------------------------------")
+        print("\n")
+        y = 1
+        c = 0
+        for i in allLaps:
+            print(y, ' ', allLaps[c][0])
+            y += 1
+            c += 1
+        choice = input('\nPress q to quit: ')
+        if choice == "q" or  choice == "Q":
+            os.system('clear')
+            loop = 0
+        else:
+            os.system('clear')
+            loop = 1
+
 
 def addTrack():
     '''This function adds a track to the database using the addTrack function from pykartdb '''
@@ -107,10 +136,10 @@ def addTrack():
     trackCity = input("City: ")
     kart.addTrack(trackName, trackLength, trackCity)
     print("Track added: ", trackName, " ", trackLength, " ", trackCity)
-    os.system("sleep 2")
+    time.sleep(2)
 
 
-
+trackID = 0
 kart.connectDB()
 
 loop = 1
@@ -129,18 +158,23 @@ while loop == 1:
                 trackID = kart.getTrackID(trackName)
                 print("Selected track: " + trackName)
                 print("Current trackID: " + trackID)
-                os.system("sleep 2")
+                time.sleep(2)
                 trackMenu()
-            if option == '2':
-                showTrackDetails(trackID)
-                #os.system('sleep 10')
-            if option =='3':
+            elif option == '2':
+                if trackID != 0:
+                    showTrackDetails(trackID)
+                else:
+                    # if no track is active show the track menu
+                    trackMenu()
+            elif option =='3':
                 # Add track menu
                 addTrack()
                 # print("Track added")
-            if option == '4':
+            elif option == '4':
                 os.system('clear')
                 mainMenu()
+            else:
+                trackMenu()
             
     elif option == '2':
         # Heat Menu
@@ -156,4 +190,6 @@ while loop == 1:
         print("Bye")
         print("\n")
         sys.exit()
+    else:
+        mainMenu()
 
