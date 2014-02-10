@@ -72,7 +72,8 @@ def allLaps(trackID):
     FROM laps
     INNER JOIN heats ON laps.heat_id = heats.heat_id 
     INNER JOIN tracks ON tracks.track_id = heats.track_id
-    WHERE tracks.track_id = "{0}"; '''.format(trackID))
+    WHERE tracks.track_id = "{0}"
+    ORDER BY laps.laptime; '''.format(trackID))
     allLaps = cur.fetchall()
     return allLaps
    
