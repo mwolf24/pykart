@@ -114,6 +114,17 @@ def totalTrackKM(trackID):
     km = laps * length / 1000
     return km
 
+
+def listAllHeats():
+    cur.execute('''SELECT
+     heats.heat_id, heats.date, tracks.name, heats.type, heats.comment
+     FROM heats
+     INNER JOIN tracks ON heats.track_id = tracks.track_id
+     ORDER BY heats.date;''')
+    heats = cur.fetchall()
+    return heats
+
+
 # close the db connection
 def closeDB():
   if con:
