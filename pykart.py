@@ -8,12 +8,7 @@ import pykartdb as kart, os, sys, time
 
 os.system('clear')
 
-print("pyKart program version 0.1")
-print("Written by Michel Wolf")
-print("------------------------")
-print("\n")
-
-# Functions
+# track Functions
 
 def mainMenu():
     os.system("clear")
@@ -57,8 +52,7 @@ def selectTrack():
         for i in trackList:
             print(y, " ", i[1])
             y += 1
-        choice = input("\nPlease choose a track: ")
-        track = int(choice)
+        track = int(input("\nPlease choose a track: "))
         selectedTrack = trackList[track -1][1] 
         return selectedTrack
 
@@ -138,6 +132,48 @@ def addTrack():
     print("Track added: ", trackName, " ", trackLength, " ", trackCity)
     time.sleep(2)
 
+# heat functions
+def heatMenu():
+    loop = 1
+    while loop == 1:
+        os.system("clear")
+        print("------------------")
+        print("    Heat Menu")
+        print("------------------")
+        print("\n")
+        print("(1) Select Heat")
+        print("(2) Show Heat Details")
+        print("(3) Add new Heat")
+        print("(4) Previous Menu")
+        print("\n")
+        return input("Enter option: ")
+
+def selectHeat():
+    ''' THis function gets a list of all available heats, display in date order and lets the user choose one from the list
+    i[0] contains the heats.heat_id wich will be returned via selectedHeat variable '''
+    heatlist = kart.listAllHeats()
+    os.system('clear')
+    print("------------------")
+    print("  Select a Track")
+    print("------------------")
+    x = 1
+    print("#", "Datum", "Kartbaan", "Heat Type", "Heat Comments")
+    for i in heatlist:
+        print(x, " ", i[1],", ", i[2], ", ", i[3], ", ", i[4])
+        x += 1
+    print
+    heat = int(input("Plese choose a heat: "))
+    selectedHeat = heatlist[heat -1][0]
+    print("Selected heatID ", selectedHeat) # debugging
+    print("Selected track: ", heatlist[heat -1][2]) # debugging
+    return selectedHeat
+
+# Main program
+
+print("pyKart program version 0.1")
+print("Written by Michel Wolf")
+print("------------------------")
+print("\n")
 
 trackID = 0
 kart.connectDB()
@@ -156,8 +192,8 @@ while loop == 1:
                 # Choose a track
                 trackName = selectTrack()
                 trackID = kart.getTrackID(trackName)
-                print("Selected track: " + trackName)
-                print("Current trackID: " + trackID)
+                print("Selected track: " + trackName) # debugging
+                print("Current trackID: " + trackID)  # debugging
                 time.sleep(2)
                 trackMenu()
             elif option == '2':
@@ -178,7 +214,11 @@ while loop == 1:
             
     elif option == '2':
         # Heat Menu
-        print("You choosed heat menu")
+        option = heatMenu()
+        if option == '1':
+            #Choose a heat
+            selectHeat()
+            time.sleep(10)
 
     elif option == '3':
         # Lap Menu
