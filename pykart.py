@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # Main pykart program
 # Created on 21/12/13 by Michel Wolf
@@ -18,7 +18,7 @@ def mainMenu():
     print("\n")
     print("(1) Track Menu")
     print("(2) Heat Menu")
-    print("(3) Lap Menu")
+    print("(3) Lap Menu")   
     print("(4) Exit")
     print("\n")
     return input("Enter option: ")
@@ -170,66 +170,69 @@ def selectHeat():
 
 # Main program
 
-print("pyKart program version 0.1")
-print("Written by Michel Wolf")
-print("------------------------")
-print("\n")
+def main():
+    print("pyKart program version 0.1")
+    print("Written by Michel Wolf")
+    print("------------------------")
+    print("\n")
 
-trackID = 0
-kart.connectDB()
+    trackID = 0
+    kart.connectDB()
 
-loop = 1
-option = 0
+    loop = 1
+    option = 0
 
 # Mail loop
 
-while loop == 1:
-    option = mainMenu()
-    if option == '1':
-            # Track Menu
-            option = trackMenu()
-            if option == '1':
-                # Choose a track
-                trackName = selectTrack()
-                trackID = kart.getTrackID(trackName)
-                print("Selected track: " + trackName) # debugging
-                print("Current trackID: " + trackID)  # debugging
-                time.sleep(2)
-                trackMenu()
-            elif option == '2':
-                if trackID != 0:
-                    showTrackDetails(trackID)
-                else:
-                    # if no track is active show the track menu
-                    trackMenu()
-            elif option =='3':
-                # Add track menu
-                addTrack()
-                # print("Track added")
-            elif option == '4':
-                os.system('clear')
-                mainMenu()
-            else:
-                trackMenu()
-            
-    elif option == '2':
-        # Heat Menu
-        option = heatMenu()
+    while loop == 1:
+        option = mainMenu()
         if option == '1':
-            #Choose a heat
-            selectHeat()
-            time.sleep(10)
+                # Track Menu
+                option = trackMenu()
+                if option == '1':
+                    # Choose a track
+                    trackName = selectTrack()
+                    trackID = kart.getTrackID(trackName)
+                    print("Selected track: " + trackName) # debugging
+                    print("Current trackID: " + trackID)  # debugging
+                    time.sleep(2)
+                    trackMenu()
+                elif option == '2':
+                    if trackID != 0:
+                        showTrackDetails(trackID)
+                    else:
+                        # if no track is active show the track menu
+                        trackMenu()
+                elif option =='3':
+                    # Add track menu
+                    addTrack()
+                # print("Track added")
+                elif option == '4':
+                    os.system('clear')
+                    mainMenu()
+                else:
+                    trackMenu()
+            
+        elif option == '2':
+            # Heat Menu
+            option = heatMenu()
+            if option == '1':
+                #Choose a heat
+                selectHeat()
+                time.sleep(10)
 
-    elif option == '3':
-        # Lap Menu
-        print("You choosed lap menu")
+        elif option == '3':
+            # Lap Menu
+            print("You choosed lap menu")
 
-    elif option == '4':
-        # Exit program
-        kart.closeDB()
-        print("Bye")
-        print("\n")
-        sys.exit()
-    else:
-        mainMenu()
+        elif option == '4':
+            # Exit program
+            kart.closeDB()
+            print("Bye")
+            print("\n")
+            sys.exit()
+        else:
+            mainMenu()
 
+if __name__ == "__main__":
+    main()
