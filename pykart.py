@@ -18,7 +18,7 @@ def mainMenu():
     print("\n")
     print("(1) Track Menu")
     print("(2) Heat Menu")
-    print("(3) Lap Menu")   
+    print("(3) Lap Menu")
     print("(4) Exit")
     print("\n")
     return input("Enter option: ")
@@ -149,7 +149,7 @@ def heatMenu():
         return input("Enter option: ")
 
 def selectHeat():
-    ''' THis function gets a list of all available heats, display in date order and lets the user choose one from the list
+    ''' This function gets a list of all available heats, display in date order and lets the user choose one from the list
     i[0] contains the heats.heat_id wich will be returned via selectedHeat variable '''
     heatlist = kart.listAllHeats()
     os.system('clear')
@@ -161,12 +161,37 @@ def selectHeat():
     for i in heatlist:
         print(x, " ", i[1],", ", i[2], ", ", i[3], ", ", i[4])
         x += 1
-    print
+    print("\n")
     heat = int(input("Plese choose a heat: "))
     selectedHeat = heatlist[heat -1][0]
     print("Selected heatID ", selectedHeat) # debugging
     print("Selected track: ", heatlist[heat -1][2]) # debugging
     return selectedHeat
+
+def ShowHeatDetails(heatID):
+    heatDate = kart.getHeatDate(heatID)
+    heatPos = kart.getHeatPos(heatID)
+    heatDayPos = kart.getDayPos(heatID)
+    heatType = kart.getHeatType(heatID)
+    heatAverage = kart.getHeatAverage(heatID)
+    heatComment = kart.getHeatComment(heatID)
+    os.system('clear')
+    loop = 1
+    while loop == 1:
+        print("------------------")
+        print("Heat details")
+        print("------------------")
+        print("\n")
+        print("Date: ", heatDate)
+        print("Type: ", heatType)
+        print("Average: ", heatAverage)
+        print("Heat finish position: ", heatPos)
+        print("Day finish position: ", heatDayPos)
+        print("Comments: ", heatComment)
+        print("\n")
+        choice = str(input("Press q to quit: "))
+        if choice == "q" or choice == "Q":
+            heatMenu()
 
 # Main program
 
@@ -177,6 +202,7 @@ def main():
     print("\n")
 
     trackID = 0
+    heatID = 0
     kart.connectDB()
 
     loop = 1
@@ -218,8 +244,24 @@ def main():
             option = heatMenu()
             if option == '1':
                 #Choose a heat
-                selectHeat()
-                time.sleep(10)
+                heatID = selectHeat()
+                time.sleep(2)
+                heatMenu()
+            if option == '2':
+                # If a heat is active, show the details
+                if heatID != 0:
+                    option = 0
+                    os.system("clear")
+                    ShowHeatDetails(heatID)
+                else:
+                    # if no heat is active show the heat menu
+                    heatMenu()
+
+            if option == 4:
+                print(option)
+                os.system("clear")
+                option = 0
+                mainMenu()
 
         elif option == '3':
             # Lap Menu

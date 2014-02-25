@@ -1,16 +1,33 @@
-insert into laps select '51' as lap_id, '5' as heat_id, '41.426' as laptime
-union select '52', '5', '39.494'
-union select '53', '5', '41.415'
-union select '54', '5', '39.431'
-union select '55', '5', '39.711'
-union select '56', '5', '38.981'
-union select '57', '5', '39.376'
-union select '58', '5', '39.363'
-union select '59', '5', '39.571'
-union select '60', '5', '39.692'
-union select '61', '5', '40.007'
-union select '62', '5', '39.034'
-union select '63', '5', '38.571'
-union select '64', '5', '39.139'
-union select '65', '5', '38.889';
+insert into laps select '159' as lap_id, '14' as heat_id, '34.02' as laptime
+union select '160', '14', '25.66'
+union select '161', '14', '25.54'
+union select '162', '14', '25.34'
+union select '163', '14', '30.50'
+union select '164', '14', '24.94'
+union select '165', '14', '24.38'
+union select '166', '14', '24.65'
+union select '167', '14', '24.51'
+union select '168', '14', '24.46'
+union select '169', '14', '24.31'
 
+union select '170', '14', '34.38'
+union select '171', '14', '24.89'
+union select '172', '14', '24.34'
+union select '173', '14', '24.86'
+union select '174', '14', '24.76'
+union select '175', '14', '24.46'
+union select '176', '14', '24.75'
+union select '177', '14', '25.31'
+union select '178', '14', '24.32'
+union select '179', '14', '24.43'
+union select '180', '14', '23.83'
+union select '181', '14', '29.38'
+union select '182', '14', '25.38'
+union select '183', '14', '24.24'
+union select '184', '14', '24.40';
+
+
+
+
+
+insert into heats values (9,5,9,13, 'training', '54.625', '2010-26-08', NULL);

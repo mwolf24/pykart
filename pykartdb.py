@@ -114,6 +114,7 @@ def totalTrackKM(trackID):
     km = laps * length / 1000
     return km
 
+# Heat functions
 
 def listAllHeats():
     cur.execute('''SELECT
@@ -124,6 +125,42 @@ def listAllHeats():
     heats = cur.fetchall()
     return heats
 
+def getHeatPos(heatID):
+    cur.execute("""SELECT heats.heat_pos FROM heats WHERE heats.heat_id = "{0}"; """.format(heatID))
+    heatDetails = cur.fetchone()
+    heatPos = int(heatDetails[0])
+    return heatPos
+
+
+def getDayPos(heatID):
+    cur.execute("""SELECT heats.day_pos FROM heats WHERE heats.heat_id = "{0}"; """.format(heatID))
+    heatDetails = cur.fetchone()
+    dayPos = int(heatDetails[0])
+    return dayPos
+
+def getHeatType(heatID):
+    cur.execute("""SELECT heats.type FROM heats WHERE heats.heat_id = "{0}"; """.format(heatID))
+    heatDetails = cur.fetchone()
+    heatType = str(heatDetails[0])
+    return heatType
+
+def getHeatAverage(heatID):
+    cur.execute("""SELECT heats.average FROM heats WHERE heats.heat_id = "{0}"; """.format(heatID))
+    heatDetails = cur.fetchone()
+    heatAverage = float(heatDetails[0])
+    return heatAverage
+
+def getHeatDate(heatID):
+    cur.execute("""SELECT heats.date FROM heats WHERE heats.heat_id = "{0}"; """.format(heatID))
+    heatDetails = cur.fetchone()
+    heatDate = str(heatDetails[0])
+    return heatDate
+
+def getHeatComment(heatID):
+    cur.execute("""SELECT heats.comment FROM heats WHERE heats.heat_id = "{0}"; """.format(heatID))
+    heatDetails = cur.fetchone()
+    heatComment = str(heatDetails[0])
+    return heatComment
 
 # close the db connection
 def closeDB():
